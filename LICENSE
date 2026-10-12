@@ -1,0 +1,19 @@
+This repository is licensed under two licences, chosen by the kind of work:
+
+  Code: scripts/
+      Mozilla Public License 2.0 (MPL-2.0)
+      Full text: added to LICENSES/ with the first file of code - REUSE
+      refuses a licence text that no file uses yet
+
+  Everything else: models/, the README and the figures
+      Creative Commons Attribution 4.0 International (CC-BY-4.0)
+      Full text: LICENSES/CC-BY-4.0.txt
+
+Every file states its own licence, following the REUSE specification
+(https://reuse.software/): an SPDX-License-Identifier header in the file, or
+an entry in REUSE.toml for files that cannot carry one.
+
+A part keeps the licence it was published under where it came from: the
+USB-C panel plate was CC-BY-4.0 in the 3d-printing toolkit, and stays so.
+
+Copyright 2026 Alon A. Rabinowitz

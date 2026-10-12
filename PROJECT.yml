@@ -1,0 +1,10 @@
+# The projects this repository holds. The format is SCHEMA.md in project-ledger.
+# schema version: set by `ledger migrate` or `ledger init` -- do not edit by hand
+schema: 1
+projects:
+  - name:     USB-C panel plate
+    kind:     build
+    state:    parked
+    next:     "measure the connector flange (models/usbc-panel-plate/flange-check.png)"
+    trackers: [models/usbc-panel-plate/README.md]
+    review:   2026-10-12

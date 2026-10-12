@@ -12,8 +12,10 @@ SOLID lines are values the model already knows. DASHED lines and orange are the 
 
 The section is cut through the HEIGHT deliberately. plate_h is gap_h + 2*overlap, which at overlap = 0 is exactly 15 — the same as the aperture — so that axis shows the plate edge landing precisely on the aperture edge with nothing to spare. Cutting through the width would be misleading: plate_w is pushed to 23.9 by the fastener floor, so it happens to carry 0.25 mm of lap that the design does not rely on and that vanishes the moment screw_style changes.
 
-    openscad -o flange-check.png --imgsize=2200,1500 \
-      --camera=19,-16,0,0,0,0,158 --projection=ortho flange-check.scad
+    openscad -o flange-check.png --imgsize=2200,1950 --camera=0,0,0,0,0,0,250 \
+      --viewall --autocenter --projection=ortho flange-check.scad
+
+--viewall --autocenter frame the whole drawing, however tall the section grows with plate_t.
 */
 
 /* Include the BODY, not just the header: plate_w and plate_h are derived values and live there. draw_model = false after the include suppresses the part itself while keeping every variable — the same mechanism parameter-map.scad uses. */
@@ -74,8 +76,13 @@ color(C_ASK) translate([-17, -17.4])
 
 /* ===== SECTION, THROUGH THE HEIGHT ======================================== */
 zs = 2.6;   /* depth exaggeration - the real sheet is 0.6 mm */
-translate([0, -33.5]) {
-    heading("SECTION through the HEIGHT - front of the case is UP", [-17, 11.7], C_KNOWN);
+/* The section's heading sits over the plate and its note, so its height follows the plate's; the section then hangs
+   4.4 below the MEASURE line by its heading. At the 19 Aug plate_t of 2.4 these are the 11.7 and -33.5 the drawing
+   was laid out at by hand; a thicker plate moves the section down instead of up into the front view. */
+sec_head = zs * plate_t + 5.46;
+sec_y    = -17.4 - 4.4 - sec_head;
+translate([0, sec_y]) {
+    heading("SECTION through the HEIGHT - front of the case is UP", [-17, sec_head], C_KNOWN);
 
     color(C_PLATE) translate([-plate_h / 2, 0]) square([plate_h, zs * plate_t]);
     for (s = [-1, 1]) color(C_PANEL)               /* the sheet, aperture between */

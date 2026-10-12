@@ -16,8 +16,11 @@ Prior art: Don Smiley's OpenSCAD dimensioned-drawings library has exactly these 
 
 The point is that it cannot drift: it INCLUDES the model rather than restating it, so every outline and every number is whatever the model currently says. Edit a parameter, re-render, and the map is correct again.
 
-    openscad -o parameter-map.png --imgsize=2200,1560 \
-      --camera=6,-17,0,0,0,0,205 --projection=ortho parameter-map.scad
+    openscad -o parameter-map.png --imgsize=2200,2080 --camera=0,0,0,0,0,0,250 \
+      --viewall --autocenter --projection=ortho parameter-map.scad
+
+--viewall --autocenter frame the whole drawing, however tall the section grows with plate_t. A fixed camera framed
+the 2.4 mm plate and cut the 8 mm one off at the bottom (12 Oct 2026).
 
 draw_model = false MUST come after the include — in OpenSCAD the last assignment in a scope wins, so this suppresses the part while keeping all of its variables.
 */
@@ -41,9 +44,13 @@ C_POCK = [0.45, 0.20, 0.60]; /* pocket and boss */
 C_STAGE= [0.05, 0.50, 0.35]; /* the staged bridge layers */
 C_PART = [0.62, 0.72, 0.85]; /* the part itself */
 
-/* Where the two views sit, and the Z exaggeration on the section. */
-sec_y = -60.0;
+/* The Z exaggeration on the section, and where the two views sit. The section is placed from its own height, bed
+   to protrusion, so a thicker plate moves it down rather than into the plan: below the plan's lowest rung (plate_w,
+   at -plate_h / 2 - 9.8) it leaves 7.5, then its heading 1.5 above its top. At the plate's 19 Aug values this is
+   the -38 the drawing was laid out at by hand. */
 zs    = 3.0;
+sec_h = zs * (plate_t + prot_t);
+sec_y = -(plate_h / 2 + 9.8 + 7.5 + sec_h + 1.5);
 
 /* ===== PLAN ================================================================ */
 /*
@@ -90,7 +97,7 @@ translate([0, 0]) { axis("X", 0, 2.6, C_OUT); axis("Y", 90, 2.6, C_OUT); }
 
 /* ===== SECTION ============================================================= */
 translate([0, sec_y]) {
-    heading("SECTION — print orientation, bed at the bottom", [-plate_w / 2, zs * 4.4]);
+    heading("SECTION — print orientation, bed at the bottom", [-plate_w / 2, sec_h + 1.5]);
     /*
     Section the PRINT-ORIENTED assembly, not the raw module. usbc_panel_plate() is authored front-at-z-0 with the protrusion at NEGATIVE z, so sectioning it directly draws the protrusion below the plate — design orientation, under a heading that says print orientation. Applying the same flip the export does puts the bed at y = 0 and everything above it, which is what the dimensions below already assume.
     */

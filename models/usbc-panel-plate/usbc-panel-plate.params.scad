@@ -39,7 +39,7 @@ screw_envelope = 22.70;     /* MEASURED, outer edge to outer edge. */
 screw_style = "hole";       /* "hole" = closed clearance hole, needs material all the way round, and the edge distance is structural. "slot" = U-shaped and open to the plate edge, so the plate slides onto the screws — nothing is left to split, the fastener floor disappears, and the plate can shrink to the coverage floor. */
 screw_edge_margin = 0.6;      /* Material outboard of each hole, per side. Ignored when screw_style = "slot". Three perimeters is the rule (the 3d-printing toolkit's docs/fdm-design-rules.md §4); under that you get a warning rather than a block, because it is your call. */
 
-plate_t  = 8;     /* Chosen so every internal transition lands ON a layer boundary in the print orientation. At 0.2 mm layers, 2.4 puts the pocket floor and all three staged layers at print z 1.2 / 1.4 / 1.6 / 2.4. At 2.5 they all land mid-layer and the staging resolves on a slicer tie-break rather than on the geometry. */
+plate_t  = 8;     /* Chosen so every internal transition lands ON a layer boundary in the print orientation. At 0.2 mm layers, 8 puts the pocket floor and all three staged layers at print z 6.8 / 7.0 / 7.2 / 8.0. At 8.1 they all land mid-layer and the staging resolves on a slicer tie-break rather than on the geometry. */
 corner_r = 1.5;     /* Rounding on the outline corners. Feeds the overlap floor above — the bigger this is, the more lap the corners need. */
 
 /* [Centre opening — lip, sized to the PORT] */
@@ -67,7 +67,7 @@ prot_face = "front";    /* "front" = the visible side (-Z). "back" = toward the 
 /* [Half-circle notches in the Y edges] */
 /* Semicircular cutouts bitten out of the top and bottom edges. These are CLEARANCE features: the fitting goes into a tight space and the notches are what lets it sit there, so they are not optional and not decorative. Removing them is not a fix for anything.
 
-The consequence is accepted rather than avoidable. At overlap 0 the plate is already only as large as the aperture, so any notch necessarily reaches past the aperture edge and opens a gap into the case across its chord — currently 1.95 mm. The guard reports the size of that gap so it stays a known quantity; it is not asking for the notches to be removed. Size them by what has to clear, then read the number.
+The consequence is accepted rather than avoidable. At overlap 0 the plate is already only as large as the aperture, so any notch necessarily reaches past the aperture edge and opens a gap into the case across its chord — currently 3 mm. The guard reports the size of that gap so it stays a known quantity; it is not asking for the notches to be removed. Size them by what has to clear, then read the number.
 
 Where overlap > 0 there is a second, avoidable failure: a notch bigger than the lap severs it. At overlap 2.5 the ceiling is about 1.9. */
 notch_r = 2.85;      /* Radius, set by the obstruction being cleared. */

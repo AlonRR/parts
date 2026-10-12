@@ -17,10 +17,10 @@ Source is split like C:
 Every parameter is a named variable, tagged MEASURED or <<CONFIRM>>.
 
 ```
-        raised rectangle (14.4 x 6.1)
+        raised rectangle (13.5 x 6.1)
    +---------------------------------------+
    |          .-------------.              |
-   |   O      |   [=====]   |      O       |   23.9 x 15.0 x 2.4 mm
+   |   O      |   [=====]   |      O       |   23.9 x 15.0 x 8 mm
    | screw    '-------------'    screw     |
    |            notch top/bottom           |
    +---------------------------------------+
@@ -34,13 +34,13 @@ Every parameter is a named variable, tagged MEASURED or <<CONFIRM>>.
 ## Current geometry
 
 ```
-plate              : 23.9 x 15 x 2.4 mm
+plate              : 23.9 x 15 x 8 mm
   width set by     : FASTENERS (23.9) - coverage alone would allow 23.4   [screw_style hole]
 covers opening     : 23.4 x 15 mm, lap 0 mm (corner floor 0.43934)
 port opening       : 9.6 x 3.9 mm as cut
-port recess        : 2.3 mm a plug must reach in (lip 0.8 + protrusion 1.5)
-rear pocket        : 14.2 x 8.8 mm as cut, 1.2 mm deep, 0.25 mm/side clearance on the boss
-max boss height    : 1.8 mm from the connector flange (pocket 1.2 + panel 0.6)
+port recess        : 5.7 mm a plug must reach in (lip 0.8 + protrusion 4.9)
+rear pocket        : 14.2 x 8.8 mm as cut, 6.8 mm deep, 0.25 mm/side clearance on the boss
+max boss height    : 7.4 mm from the connector flange (pocket 6.8 + panel 0.6)
 two-bridge trick   : ON -- 3 staged layers of 0.2 mm
   L1 two bridge    : slot 9.6 x 8.8  -> two strips spanning 8.8 mm, anchored both ends
   L2 rectangle     : 9.6 x 3.9 square  -> the other two sides bridge 9.6 mm
@@ -48,19 +48,20 @@ two-bridge trick   : ON -- 3 staged layers of 0.2 mm
 web beside pocket  : 1.2 mm
 web above/below    : 3.1 mm
 outboard of screw  : 0.45 mm
-protrusion         : 14.4 x 6.1 x 1.5 mm on the front
-  frame beside port: 2.4 mm
+protrusion         : 13.5 x 6.1 x 4.9 mm on the front
+  frame beside port: 1.95 mm
   frame over/under : 1.1 mm
-  prot -> screw    : 1.1 mm
-notch              : r 1.8 mm (1.95 as cut) at x = 0
-  notch -> pocket  : 1.15 mm
-  notch -> screw   : 8.87014 mm
-  lap left at notch: -1.95 mm
+  prot -> screw    : 1.55 mm
+notch              : r 2.85 mm (3 as cut) at x = 0
+  notch -> pocket  : 0.1 mm
+  notch -> screw   : 7.82014 mm
+  lap left at notch: -3 mm
 screws land on     : OPEN AIR - plate clamps to the connector, not to the panel - and with overlap 0 there is no lap, so the panel is not trapped at all
 WARNING: overlap 0 - the plate is no larger than the aperture, so NOTHING in front of the panel is wider than the hole. The connector flange behind can still stop it pulling OUT, but nothing stops the assembly being pushed IN - which is the direction a plug loads it
 WARNING: outboard of screw 0.45 mm is under 3 perimeters (1.35) as cut - a screw pulls directly on this and it will split
-WARNING: notch reaches 1.95 mm past the aperture edge - it opens a gap straight into the case across its whole chord, and removes any lap there was to retain the plate at that edge
-warnings           : 3 - the part will build, read them
+WARNING: notch reaches 3 mm past the aperture edge - it opens a gap straight into the case across its whole chord, and removes any lap there was to retain the plate at that edge
+WARNING: notch cuts to within 0.1 mm of the rear pocket
+warnings           : 4 - the part will build, read them
 ```
 
 ## Dimension provenance
@@ -72,11 +73,11 @@ warnings           : 3 - the part will build, read them
 | `screw_span` | **19.8** | **MEASURED** — see derivation below |
 | `screw_d` | **2.9** (M2.5) | **MEASURED** — see derivation below |
 | `boss_h` | **8.0** | **MEASURED** |
-| `prot_w` × `prot_h` | **14.4 × 6.1** | **MEASURED** |
+| `prot_w` × `prot_h` | **13.5 × 6.1** | **MEASURED** |
 | `boss_w` | 13.4 | ⚠️ **NOT measured** — photo-scaled, and it feeds the fit |
-| `prot_t` | 1.5 | ⚠️ **NOT measured** |
+| `prot_t` | 4.9 | ⚠️ **NOT measured** |
 | `overlap` | **0** | chosen deliberately — the fitting is space-limited. See "Retention" |
-| `plate_t` | 2.4 | chosen — whole layers, see "layer alignment" |
+| `plate_t` | 8 | chosen — whole layers, see "layer alignment" |
 | `port_w` × `port_h` | 9.3 × 3.6 | chosen to hug the 8.94 × 3.16 receptacle shell |
 
 ### Screw pattern derivation
@@ -148,17 +149,17 @@ Testing `overlap <= corner_min` alone conflates them, and degenerates at
 `corner_r = 0`: `corner_min` is 0, the condition reads `0 <= 0`, and it reports
 rounded corners falling inside on a plate that has no rounded corners.
 
-**The notches cut past the aperture edge** by 1.95 mm. At `overlap = 0` there is
+**The notches cut past the aperture edge** by 3 mm. At `overlap = 0` there is
 no lap left for them to remove, so the warning states what is actually true — an
 open gap into the case across the notch chord — rather than asserting a lap that
 does not exist.
 
 ## Layer alignment
 
-`plate_t = 2.4`, not 2.5. At `fdm_layer_h = 0.2` that puts the pocket floor and
-all three staged layers at print z **1.2 / 1.4 / 1.6 / 2.4** — every one on-grid.
-At 2.5 mm they all land mid-layer and the staging resolves on a slicer tie-break
-rather than on the geometry. Asserted.
+`plate_t = 8`, not 8.1. At `fdm_layer_h = 0.2` that puts the pocket floor and
+all three staged layers at print z **6.8 / 7.0 / 7.2 / 8.0** — every one on-grid.
+At 8.1 mm they all land mid-layer and the staging resolves on a slicer tie-break
+rather than on the geometry. A `plate_t` or `lip_t` off the layer grid is a warning.
 
 ## Slicer facts are named `fdm_*`
 
@@ -226,7 +227,7 @@ design exists. See [the 3d-printing toolkit's `docs/fdm-design-rules.md`](https:
 **Back face down.** `flip_for_print` rotates the model 180° about X on export,
 so the STL arrives already oriented — do **not** flip it again in the slicer.
 Front-face-down puts the protrusion on the bed and leaves the plate rim
-overhanging ~4.6 mm in mid-air.
+overhanging the protrusion by 5.2 mm in X and 4.45 mm in Y, in mid-air.
 
 The `lead_in` chamfer consequently sits on the **top** face. It is a plug lead-in
 only; it does not relieve elephant's foot, which is a first-layer effect. The

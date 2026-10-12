@@ -37,7 +37,7 @@ To make the plate narrower, lower the fastener floor — either by trimming scre
 */
 screw_envelope = 22.70;     /* MEASURED, outer edge to outer edge. */
 screw_style = "hole";       /* "hole" = closed clearance hole, needs material all the way round, and the edge distance is structural. "slot" = U-shaped and open to the plate edge, so the plate slides onto the screws — nothing is left to split, the fastener floor disappears, and the plate can shrink to the coverage floor. */
-screw_edge_margin = 0.6;      /* Material outboard of each hole, per side. Ignored when screw_style = "slot". Three perimeters is the rule (docs/fdm-design-rules.md §4); under that you get a warning rather than a block, because it is your call. */
+screw_edge_margin = 0.6;      /* Material outboard of each hole, per side. Ignored when screw_style = "slot". Three perimeters is the rule (the 3d-printing toolkit's docs/fdm-design-rules.md §4); under that you get a warning rather than a block, because it is your call. */
 
 plate_t  = 8;     /* Chosen so every internal transition lands ON a layer boundary in the print orientation. At 0.2 mm layers, 2.4 puts the pocket floor and all three staged layers at print z 1.2 / 1.4 / 1.6 / 2.4. At 2.5 they all land mid-layer and the staging resolves on a slicer tie-break rather than on the geometry. */
 corner_r = 1.5;     /* Rounding on the outline corners. Feeds the overlap floor above — the bigger this is, the more lap the corners need. */
@@ -112,7 +112,7 @@ Layer 3, THE ROUNDED CORNERS, becomes the real port, port_r rounding and all. Th
 bridge_slot = true; /* false = the lip closes in one go, and the hole is drawn in mid-air. */
 
 /* [Slicer facts — MIRROR these from the profile, do not invent them] */
-/* Everything with an fdm_ prefix is a fact about how the part gets MADE, not a decision about what it should BE. Each one has a counterpart in the print profile, and the model is wrong the moment they disagree. They are grouped and prefixed so that is obvious at a glance rather than discovered by a bad print. scripts/scad-check.sh cross-checks them against the G-code. */
+/* Everything with an fdm_ prefix is a fact about how the part gets MADE, not a decision about what it should BE. Each one has a counterpart in the print profile, and the model is wrong the moment they disagree. They are grouped and prefixed so that is obvious at a glance rather than discovered by a bad print. scad-tools/scripts/scad-check.sh cross-checks them against the G-code. */
 fdm_layer_h     = 0.2;      /* = layer_height. The staged layers land mid-layer if this is wrong. */
 fdm_extrusion_w = 0.45;     /* = extrusion_width. NOT the nozzle diameter — the 0.4 nozzle lays a 0.45 bead, and every wall thickness in this design is a multiple of the bead, not of the nozzle. */
 fdm_hole_comp   = 0.15;     /* Printed holes come out undersize (bead width plus the arc effect); every hole is grown by this per side. */

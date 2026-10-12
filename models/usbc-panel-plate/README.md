@@ -218,7 +218,7 @@ way the render still succeeds while silently doing less than it claims.
 is snipped or drilled afterwards, and the sliced G-code carries
 `support_material = 0`. House rule: prefer no support, prefer permanent over
 sacrificial, and read "this needs a sacrificial feature" as a sign a better
-design exists. See [`docs/fdm-design-rules.md`](../../docs/fdm-design-rules.md)
+design exists. See [the 3d-printing toolkit's `docs/fdm-design-rules.md`](https://github.com/AlonRR/3d-printing-toolkit/blob/main/docs/fdm-design-rules.md)
 §3b–3c.
 
 ## Printing

@@ -1,6 +1,6 @@
 # The publish decision, where tooling can read it.
 # Convention: repo-secret-scan templates/publish-status.example
 
-publish: ready
-reason:  finished parts, published with their history (Q66, 5 Oct 2026); the USB-C plate was already public in the 3d-printing toolkit
+publish: public
+reason:  finished parts, published with their history (Q66, 5 Oct 2026); on GitHub as AlonRR/parts since 12 Oct 2026 (A235)
 review:  2026-10-12
